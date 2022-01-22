@@ -57,6 +57,7 @@ public class DiceManager : MonoBehaviour
 
             d.isRollable = true;
         }
+        resultButton.gameObject.SetActive(false);
     }
 }
 
