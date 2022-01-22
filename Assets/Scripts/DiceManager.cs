@@ -19,8 +19,14 @@ public class DiceManager : MonoBehaviour
     [SerializeField]
     GameObject selectedPanel;
 
+    public int sum = 0;
+
+    [SerializeField]
+    Text sumCalc;
+
     private void Awake()
     {
+        //gameObject.SetActive(false);
         resultButton.gameObject.SetActive(false);
         resultButton.onClick.AddListener(Result);
     }
@@ -52,13 +58,18 @@ public class DiceManager : MonoBehaviour
             {
                 d.transform.SetParent(selectedPanel.transform);
                 d.GetComponent<Image>().color = Color.white;
+                sum += d.diceData.numData;
                 d.enabled = false;
             }
 
             d.isRollable = true;
         }
+        sumCalc.text = sum.ToString();
+        
         resultButton.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
+
 }
 
 [Serializable]
