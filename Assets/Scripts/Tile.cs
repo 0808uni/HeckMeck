@@ -4,27 +4,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+//タイルのオブジェクトにアタッチ
+//TileManagerのイベントを呼び出す
 public class Tile : MonoBehaviour
 {
     [SerializeField]
-    int number;
+    int num;
     [SerializeField]
     int point;
-
+    
     [SerializeField]
+    public bool isSlectable;
+    [SerializeField]
+    public bool isSelected;
+
+    TileManager tileManager;
+    
     Button buttonCompornent;
 
-    [SerializeField]
-    GameDirector gameDirector;
-
     private void Awake()
+    {
+        tileManager = gameObject.transform.parent.GetComponent<TileManager>();
+        buttonCompornent = gameObject.GetComponent<Button>();
+    }
+
+    private void Start()
     {
         buttonCompornent.onClick.AddListener(OnClick);
     }
 
     private void OnClick()
     {
-        gameDirector.players[gameDirector.players.Count-1].ownedTiles.Add(this);
-        transform.SetParent(gameDirector.players[gameDirector.players.Count-1].gameObject.transform);
+        tileManager.TileClick(this);
     }
 }

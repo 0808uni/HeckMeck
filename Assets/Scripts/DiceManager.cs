@@ -5,10 +5,12 @@ using System;
 using UnityEngine.UI;
 using System.Linq;
 
+//サイコロを並べるパネル。
+//サイコロに関する外交的なイベントを扱う
 public class DiceManager : MonoBehaviour
 {
     [SerializeField]
-    public List<DiceData> datas;
+    public List<DiceData> diceDatas;
 
     [SerializeField]
     public List<Dice> dices;
@@ -77,4 +79,5 @@ public class DiceData
 {
     public Sprite pipData;
     public int numData;
+    public int typeData;
 }

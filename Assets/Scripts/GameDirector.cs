@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//ゲームを進行する役割
+//ゲームが終わっているか否か、タイル・サイコロが引けるか否かの情報を渡す
 public class GameDirector : MonoBehaviour
 {
     [SerializeField]
@@ -10,8 +13,4 @@ public class GameDirector : MonoBehaviour
     [SerializeField]
     public int playerTurn;
 
-    private void Start()
-    {
-
-    }
 }

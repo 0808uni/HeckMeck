@@ -6,12 +6,18 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 
+//サイコロのオブジェクトにアタッチ
+//サイコロの内部的なイベントはここで行う
+//ここからDiceManagerのイベントを呼び出す
 public class Dice : MonoBehaviour
 {
     [SerializeField]
     public DiceData diceData;
+    
     [SerializeField]
     public bool isRollable;
+    [SerializeField]
+    public bool isSelectable;
     [SerializeField]
     public bool isSelected;
 
@@ -27,7 +33,8 @@ public class Dice : MonoBehaviour
 
     private void Start()
     {
-        diceData = diceManager.datas[0];
+        //初期値＝１
+        diceData = diceManager.diceDatas[0];
         isRollable = true;
         isSelected = false;
 
@@ -50,7 +57,7 @@ public class Dice : MonoBehaviour
     {
         //ランダムなインデックスを作成し、マネージャーのサイコロの大元の情報配列から引き出す
         int randomIndex = UnityEngine.Random.Range(0, 6);
-        diceData = diceManager.datas[randomIndex];
+        diceData = diceManager.diceDatas[randomIndex];
         isRollable = false;
     }
 
