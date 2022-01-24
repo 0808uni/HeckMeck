@@ -10,14 +10,14 @@ using UnityEngine.UI;
 public class Tile : MonoBehaviour
 {
     [SerializeField]
-    int num;
+    public int num;
     [SerializeField]
     int point;
     
     [SerializeField]
     public bool isSlectable;
     [SerializeField]
-    public bool isSelected;
+    public bool isOwned;
 
     TileManager tileManager;
     

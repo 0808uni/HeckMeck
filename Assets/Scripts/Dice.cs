@@ -17,12 +17,11 @@ public class Dice : MonoBehaviour
     [SerializeField]
     public bool isRollable;
     [SerializeField]
-    public bool isSelectable;
-    [SerializeField]
     public bool isSelected;
+    [SerializeField]
+    public bool isSlectable;
 
     DiceManager diceManager;
-
     Button buttonComponent;
 
     private void Awake()
@@ -37,6 +36,7 @@ public class Dice : MonoBehaviour
         diceData = diceManager.diceDatas[0];
         isRollable = true;
         isSelected = false;
+        isSlectable = true;
 
         buttonComponent.onClick.AddListener(OnClick);
     }
@@ -44,16 +44,11 @@ public class Dice : MonoBehaviour
 
     private void Update()
     {
-        //サイコロの画像を常に更新、isRollableが正の時に画面をタップ（クリック）で振れる
+        //サイコロの画像を常に更新
         gameObject.GetComponent<Image>().sprite = diceData.pipData;
-
-        if (Input.GetMouseButtonDown(0)&&isRollable)
-        {
-            Roll();
-        }
     }
 
-    private void Roll()
+    public void Roll()
     {
         //ランダムなインデックスを作成し、マネージャーのサイコロの大元の情報配列から引き出す
         int randomIndex = UnityEngine.Random.Range(0, 6);

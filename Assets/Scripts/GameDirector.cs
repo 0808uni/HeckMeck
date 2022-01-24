@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.UI;
 
 
 //ゲームを進行する役割
@@ -13,4 +16,19 @@ public class GameDirector : MonoBehaviour
     [SerializeField]
     public int playerTurn;
 
+    [SerializeField]
+    TileManager tileManager;
+    [SerializeField]
+    GameObject dobonText;
+
+    public IEnumerator Dobon()
+    {
+        yield return new WaitForSeconds(1);
+
+        dobonText.SetActive(true);
+
+        //playerに所有されていない中で最大の
+        tileManager.tiles.Where(n => !n.isOwned).
+            Last().GetComponent<Image>().sprite=null;
+    }
 }
