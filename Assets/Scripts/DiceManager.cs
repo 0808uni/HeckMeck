@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
 using System.Linq;
-using UnityEngine.EventSystems;
 
 //サイコロを並べるパネル。
 //サイコロに関する外交的なイベントを扱う
@@ -16,7 +14,8 @@ public class DiceManager : MonoBehaviour
     public List<Dice> dices;
 
     [SerializeField]
-    Button resultButton;
+    public Button resultButton;
+
     [SerializeField]
     GameObject selectedPanel;
 
@@ -35,6 +34,25 @@ public class DiceManager : MonoBehaviour
         resultButton.onClick.AddListener(Result);
     }
 
+    public void Reload()
+    {
+        dices.ForEach(n => n.transform.SetParent(selectedPanel.transform));
+
+        foreach (var d in dices)
+        {
+            d.transform.SetParent(this.transform);
+            d.diceData = diceDatas[0];
+            d.isRollable = true;
+            d.isSelected = false;
+            d.isSlectable = true;
+            d.buttonComponent.interactable = false;
+        }
+        diceDatas.ForEach(n => n.isSelectAlready = false);
+
+        sum = 0;
+        sumCalc.text = sum.ToString();
+    }
+
     public void Roll()
     {
         foreach (var d in dices.Where(d => d.isRollable))
@@ -46,6 +64,15 @@ public class DiceManager : MonoBehaviour
         {
             Debug.Log("Dobon");
             StartCoroutine(gameDirector.Dobon());
+            return;
+        }
+
+        if (dices.Where(n => n.isSlectable).Distinct().Count() == 1
+            && dices.First().diceData.typeData != 6 && !diceDatas.Last().isSelectAlready)
+        {
+            Debug.Log("Dobon");
+            StartCoroutine(gameDirector.Dobon());
+            return;
         }
     }
 
@@ -56,7 +83,7 @@ public class DiceManager : MonoBehaviour
         dices.ForEach(n => n.GetComponent<Image>().color = Color.white);
         dices.ForEach(n => n.isSelected = false);
         //場にあるサイコロ（Selectable）
-        foreach (var d in dices.Where(n=>n.isSlectable))
+        foreach (var d in dices.Where(n => n.isSlectable))
         {
             if (d.diceData == dice.diceData)
             {
@@ -72,23 +99,20 @@ public class DiceManager : MonoBehaviour
         //既に選んだ目は帰される
         if (dices.Find(n => n.isSelected && n.diceData.isSelectAlready)) return;
         //選んだ目の種類を選択済みにする
-        foreach (var d in diceDatas.Where(d => dices.
-        Find(n => n.diceData == d && n.isSelected == true) && !d.isSelectAlready))
-        {
-            d.isSelectAlready = true;
-        }
+        dices.First(n => n.isSelected&&n.isSlectable).diceData.isSelectAlready = true;
         //出現したボタンを押すと下部のパネルにサイコロが移動する
-        foreach (var d in dices.Where(n => n.isSelected&&n.isSlectable))
+        foreach (var d in dices.Where(n => n.isSelected && n.isSlectable))
         {
             d.transform.SetParent(selectedPanel.transform);
             d.GetComponent<Image>().color = Color.white;
             sum += d.diceData.numData;
-            d.enabled = false;
+            d.buttonComponent.interactable = false;
             d.isSlectable = false;//場から除外
         }
-        foreach (var d in dices.Where(n=>n.isSlectable))
+        foreach (var d in dices.Where(n => n.isSlectable))
         {
             d.isRollable = true;
+            d.buttonComponent.interactable = false;
         }
         sumCalc.text = sum.ToString();
 
@@ -97,7 +121,6 @@ public class DiceManager : MonoBehaviour
 
         tileManager.PermitToGet(sum);
     }
-
 }
 
 [Serializable]

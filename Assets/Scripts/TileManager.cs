@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Linq;
 
 //タイルを内容する
@@ -16,10 +13,11 @@ public class TileManager : MonoBehaviour
 
     [SerializeField]
     GameDirector gameDirector;
+    [SerializeField]
+    DiceManager diceManager;
 
     Player currentPlayer;
 
-    DiceManager diceManager;
 
     private void Update()
     {
@@ -28,17 +26,20 @@ public class TileManager : MonoBehaviour
 
     internal void PermitToGet(int sum)
     {
-        foreach (var t in tiles.Where(t => t.num <= sum))
+        if (!diceManager.diceDatas.Last().isSelectAlready)
         {
-            t.GetComponent<Button>().interactable = true;
+            return;
+        }
+        foreach (var t in tiles.Where(t => t.num <= sum&&t.isSlectable))
+        {
+            t.buttonCompornent.interactable = true;
         }
     }
 
     public void TileClick(Tile tile)
     {
-        currentPlayer.ownedTiles.Add(tile);
-        tile.gameObject.transform.SetParent(currentPlayer.transform);
-        tile.transform.position = currentPlayer.transform.position;
+        currentPlayer.Owning(tile);
+        tile.isOwned = true;
     }
 
 

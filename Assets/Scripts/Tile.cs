@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 
 //タイルのオブジェクトにアタッチ
 //TileManagerのイベントを呼び出す
+[RequireComponent(typeof(Button))]
 public class Tile : MonoBehaviour
 {
     [SerializeField]
@@ -21,12 +19,13 @@ public class Tile : MonoBehaviour
 
     TileManager tileManager;
     
-    Button buttonCompornent;
+    public Button buttonCompornent;
 
     private void Awake()
     {
         tileManager = gameObject.transform.parent.GetComponent<TileManager>();
         buttonCompornent = gameObject.GetComponent<Button>();
+        isSlectable = true;
     }
 
     private void Start()

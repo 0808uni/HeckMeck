@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 
 //サイコロのオブジェクトにアタッチ
 //サイコロの内部的なイベントはここで行う
 //ここからDiceManagerのイベントを呼び出す
+[RequireComponent(typeof(Button))]
 public class Dice : MonoBehaviour
 {
     [SerializeField]
@@ -22,7 +19,7 @@ public class Dice : MonoBehaviour
     public bool isSlectable;
 
     DiceManager diceManager;
-    Button buttonComponent;
+    public Button buttonComponent;
 
     private void Awake()
     {
@@ -39,8 +36,8 @@ public class Dice : MonoBehaviour
         isSlectable = true;
 
         buttonComponent.onClick.AddListener(OnClick);
+        buttonComponent.interactable = false;
     }
-
 
     private void Update()
     {
@@ -54,6 +51,7 @@ public class Dice : MonoBehaviour
         int randomIndex = UnityEngine.Random.Range(0, 6);
         diceData = diceManager.diceDatas[randomIndex];
         isRollable = false;
+        buttonComponent.interactable = true;
     }
 
     private void OnClick()

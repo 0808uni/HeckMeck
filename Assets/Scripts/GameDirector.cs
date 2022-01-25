@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -19,7 +18,20 @@ public class GameDirector : MonoBehaviour
     [SerializeField]
     TileManager tileManager;
     [SerializeField]
+    DiceManager diceManager;
+    [SerializeField]
     GameObject dobonText;
+
+    [SerializeField]
+    Button rerollButton;
+    Text rerollButText;
+    string defaultString; 
+
+    private void Awake()
+    {
+        rerollButText = rerollButton.GetComponentInChildren<Text>();
+        defaultString = rerollButText.text;
+    }
 
     public IEnumerator Dobon()
     {
@@ -27,8 +39,37 @@ public class GameDirector : MonoBehaviour
 
         dobonText.SetActive(true);
 
-        //playerに所有されていない中で最大の
-        tileManager.tiles.Where(n => !n.isOwned).
-            Last().GetComponent<Image>().sprite=null;
+        //playerに所有されていない中で最大のタイル
+        tileManager.tiles.Where(n => !n.isOwned && n.isSlectable).
+            Last().GetComponent<Image>().sprite = null;
+        tileManager.tiles.Where(n => !n.isOwned && n.isSlectable).
+            Last().isSlectable = false;
+
+        yield return new WaitForSeconds(2);
+
+        dobonText.SetActive(false);
+        diceManager.resultButton.gameObject.SetActive(false);
+        diceManager.gameObject.SetActive(false);
+
+        NextTurn();
+    }
+
+    public void NextTurn()
+    {
+
+
+        Debug.Log("TurnEnd,NextTurn");
+
+        playerTurn++;
+
+        if (playerTurn > players.Count - 1)
+        {
+            playerTurn = 0;
+        }
+
+        tileManager.tiles.ForEach(n => n.buttonCompornent.interactable = false);
+
+        diceManager.Reload();
+        rerollButText.text = defaultString;
     }
 }
