@@ -15,12 +15,19 @@ public class Player : MonoBehaviour
     [SerializeField]
     public List<Tile> ownedTiles;
 
-    [SerializeField]
     GameDirector gameDirector;
+    //GameObject playerBoard;
 
+    private void Awake()
+    {
+        gameDirector = GameObject.Find("GameDirector").GetComponent<GameDirector>();
+        //playerBoard = GameObject.Find("PlayerBoard");
+    }
     private void Start()
     {
         playerName.text = myName;
+        gameDirector.players.Add(this);
+        //this.transform.SetParent(playerBoard.transform);
     }
 
     public void Owning(Tile tile)
