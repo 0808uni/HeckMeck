@@ -57,7 +57,7 @@ public class DiceManager : MonoBehaviour
 
         foreach (var d in dices)
         {
-            d.transform.SetParent(this.transform);
+            d.transform.SetParent(this.transform,false);
             d.diceData = diceDatas[0];
             d.isRollable = true;
             d.isSelected = false;

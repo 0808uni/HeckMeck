@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         }
 
         ownedTiles.Add(tile);
-        tile.transform.SetParent(transform);
+        tile.transform.SetParent(transform,false);
         tile.transform.position = transform.position;
 
         gameDirector.NextTurn();
