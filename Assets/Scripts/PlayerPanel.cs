@@ -5,19 +5,21 @@ using UnityEngine;
 public class PlayerPanel : MonoBehaviour
 {
     bool isDropped;
+    [SerializeField]
+    int distance;
 
     public void DropDown()
     {
-        Vector3 pos = transform.position;
+        Vector3 pos = gameObject.transform.position;
 
         if (!isDropped)
         {
-            pos.y -= 100;
+            pos.y -= distance;
             isDropped = true;
         }
         else
         {
-            pos.y += 100;
+            pos.y += distance;
             isDropped = false;
         }
 
