@@ -23,7 +23,7 @@ public class Tile : MonoBehaviour
 
     private void Awake()
     {
-        tileManager = gameObject.transform.parent.GetComponent<TileManager>();
+        tileManager = GameObject.Find("TileManager").GetComponent<TileManager>();
         buttonCompornent = gameObject.GetComponent<Button>();
         isSlectable = true;
     }
@@ -35,6 +35,6 @@ public class Tile : MonoBehaviour
 
     private void OnClick()
     {
-        tileManager.TileClick(this);
+        tileManager.TileClick(this.gameObject.GetComponent<Tile>());
     }
 }
