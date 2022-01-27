@@ -16,18 +16,18 @@ public class Player : MonoBehaviour
     public List<Tile> ownedTiles;
 
     GameDirector gameDirector;
-    //GameObject playerBoard;
+    GameObject playerBoard;
 
     private void Awake()
     {
         gameDirector = GameObject.Find("GameDirector").GetComponent<GameDirector>();
-        //playerBoard = GameObject.Find("PlayerBoard");
+        playerBoard = GameObject.Find("PlayerBoard");
     }
     private void Start()
     {
         playerName.text = myName;
         gameDirector.players.Add(this);
-        //this.transform.SetParent(playerBoard.transform);
+        this.transform.SetParent(playerBoard.transform);
     }
 
     public void Owning(Tile tile)

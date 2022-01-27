@@ -1,16 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerPanel : MonoBehaviour
 {
     bool isDropped;
     [SerializeField]
     int distance;
+    [SerializeField]
+    float duration;
+
+    RectTransform rect;
+
+    private void Start()
+    {
+        rect = GetComponent<RectTransform>();
+    }
 
     public void DropDown()
     {
-        Vector3 pos = gameObject.transform.position;
+        Vector3 pos = rect.localPosition;
 
         if (!isDropped)
         {
@@ -23,6 +33,6 @@ public class PlayerPanel : MonoBehaviour
             isDropped = false;
         }
 
-        transform.position = pos;
+        rect.DOLocalMove(pos, duration);
     }
 }
