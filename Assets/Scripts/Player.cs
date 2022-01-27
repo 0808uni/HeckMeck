@@ -22,12 +22,12 @@ public class Player : MonoBehaviour
     {
         gameDirector = GameObject.Find("GameDirector").GetComponent<GameDirector>();
         playerBoard = GameObject.Find("PlayerBoard");
+        gameDirector.players.Add(this);
     }
     private void Start()
     {
         playerName.text = myName;
-        gameDirector.players.Add(this);
-        this.transform.SetParent(playerBoard.transform);
+        this.transform.SetParent(playerBoard.transform,false);
     }
 
     public void Owning(Tile tile)
