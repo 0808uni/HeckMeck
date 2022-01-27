@@ -3323,9 +3323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20aaf0e809642594caa4a643ead668fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
+  players: []
   playerTurn: 0
   tileManager: {fileID: 967711978}
   diceManager: {fileID: 337064225}

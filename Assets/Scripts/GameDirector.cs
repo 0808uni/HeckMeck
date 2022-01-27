@@ -49,7 +49,7 @@ public class GameDirector : MonoBehaviour
 
         dobonText.SetActive(false);
         diceManager.resultButton.gameObject.SetActive(false);
-        diceManager.gameObject.SetActive(false);
+        diceManager.Slide();
 
         NextTurn();
     }

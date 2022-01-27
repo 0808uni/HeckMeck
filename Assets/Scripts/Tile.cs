@@ -35,6 +35,6 @@ public class Tile : MonoBehaviour
 
     private void OnClick()
     {
-        tileManager.TileClick(this.gameObject.GetComponent<Tile>());
+        tileManager.TileClick(this);
     }
 }
